@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TestComponent } from '../test-component/test-component.component';
+import { TestService } from '../test-service.service';
 
 @NgModule({
-  declarations: [], //TODO: Do something here
+  declarations: [TestComponent], 
+  providers: [{provide: TestService, useClass: TestService}],
   imports: [
     CommonModule
   ],
