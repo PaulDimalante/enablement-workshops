@@ -1,12 +1,15 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, async } from '@angular/core/testing';
 
-import { TestServiceService } from './test-service.service';
+import { TestService } from './test-service.service';
 
-describe('TestServiceService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+describe('TestService', () => {
+  let service: TestService;
+  
+  beforeEach(() => { TestBed.configureTestingModule({})
+    service = TestBed.get(TestService);
+  });
 
   it('should be created', () => {
-    const service: TestServiceService = TestBed.get(TestServiceService);
     expect(service).toBeTruthy();
   });
 });
