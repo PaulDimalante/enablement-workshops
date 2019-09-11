@@ -7,12 +7,12 @@ public class Knight implements FighterInterface {
     private GameDie gameDie;
     private Damage damage;
 
-    public Knight(GameDie die) {
-        gameDie = die;
-    }
-
     public void setDamage(Damage damage) {
         this.damage = damage;
+    }
+
+    public void setGameDie(GameDie gameDie) {
+        this.gameDie = gameDie;
     }
 
     public int dealDamage() {

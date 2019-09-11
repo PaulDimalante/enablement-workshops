@@ -1,5 +1,6 @@
 package com.cognizant.cde;
 
+import com.cognizant.cde.damage.DamageAssassin;
 import com.cognizant.cde.damage.DamageBarbarian;
 import com.cognizant.cde.damage.DamageKnight;
 import com.cognizant.cde.damage.DamageWizard;
@@ -24,31 +25,35 @@ public class Main {
 
         System.out.println("barbarian vs knight");
         fighterA = new Barbarian(new TwentySidedDie(), new DamageBarbarian());
-        Knight knight = new Knight(new TenSidedDie());
+        Knight knight = new Knight();
+        knight.setGameDie(new TenSidedDie());
         knight.setDamage(new DamageKnight());
         fighterB = knight;
         enterTheArena(fighterA, fighterB);
 
         System.out.println("wizard vs assassin");
-        Wizard wizard = new Wizard(new SixSidedDie());
+        Wizard wizard = new Wizard();
 
         Class<?> cls = wizard.getClass();
-        Field dependency = null;
+        Field damageDependency = null;
+        Field dieDependency = null;
         try {
-            dependency = cls.getDeclaredField("damage");
+            damageDependency = cls.getDeclaredField("damage");
+            dieDependency = cls.getDeclaredField("gameDie");
         } catch (NoSuchFieldException e) {
             e.printStackTrace();
         }
         //This bypasses private access modifier
-        dependency.setAccessible(true);
-        DamageWizard damageWizard = new DamageWizard();
+        damageDependency.setAccessible(true);
+        dieDependency.setAccessible(true);
         try {
-            dependency.set(wizard, damageWizard);
+            damageDependency.set(wizard, new DamageWizard());
+            dieDependency.set(wizard, new SixSidedDie());
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
         fighterA = wizard;
-        fighterB = new Assassin(new SixSidedDie());
+        fighterB = new Assassin(new DamageAssassin());
         enterTheArena(fighterA, fighterB);
     }
 
